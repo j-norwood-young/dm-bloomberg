@@ -27,7 +27,7 @@ const axios = require("axios");
 	for (let article of articles) {
 		let exists = storedArticles.find(
 			storedArticle =>
-				storedArticle.provider_uid === article.uuid
+				storedArticle.provider_uid === article.id
 		);
 		if (exists) continue;
 		let fullArticle = (await axios.get(`${process.env.ARTICLE_URL}${article.id}`)).data.asset;
@@ -35,7 +35,7 @@ const axios = require("axios");
 		let data = {
 			headline: fullArticle.fields.headline.value,
 			blurb: fullArticle.fields.description.value,
-			provider_uid: article.uuid,
+			provider_uid: article.id,
 			body: fullArticle.fields.text.value,
 			byline: fullArticle.fields.author.value,
 			provider: "Bloomberg",
