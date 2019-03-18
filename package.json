@@ -5,11 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "axios": "^0.18.0",
-    "dotenv": "^7.0.0",
-    "jxp": "^1.0.9",
-    "moment": "^2.24.0",
-    "puppeteer": "^1.13.0",
-    "restler-bluebird": "^0.2.2"
+    "dotenv": "^7.0.0"
   },
   "devDependencies": {},
   "scripts": {
