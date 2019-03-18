@@ -1,4 +1,4 @@
-# AFP API
+# Bloomberg Scraper
 
 This app grabs articles from Bloomberg and posts them on to an API. You will need a Bloomberg account to use it.
 
