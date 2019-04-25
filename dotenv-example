@@ -1,0 +1,11 @@
+KEY=<Your Key>
+SECRET=<Your Secret>
+USERNAME=<Your Username>
+PASSWORD=<Your Password>
+URL=https://api.bloomberg.com/syndication/stage/portal/adapter/v1/api/v1/articles?&size=30
+ARTICLE_URL=https://api.bloomberg.com/syndication/stage/portal/adapter/v1/api/v1/articles/
+LOGIN_URL=https://content-service.bloomberg.com/auth/login
+API_USERNAME=<API Username>
+API_PASSWORD=<API Password>
+API_ENDPOINT=http://localhost:5001/api/article
+PROVIDER=Bloomberg
