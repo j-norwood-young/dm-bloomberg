@@ -12,25 +12,30 @@ axios.interceptors.request.use((request) => {
 (async () => {
 	try {
 		const token_url = `https://api.bloomberg.com/syndication/token`;
-		const auth = Buffer.from(`${process.env.KEY}:${process.env.SECRET}`).toString('base64')
-		var token_result = (await axios({
-			url: token_url, 
-			method: "post",
-			headers: {
-				"Content-Type": "application/x-www-form-urlencoded",
-				"Referer": "https://content-service.bloomberg.com/auth/login",
-				"Origin": "https://content-service.bloomberg.com",
-				"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36",
-				"Authorization": `Basic ${auth}`
+		const credentials = {
+			client: {
+				id: process.env.KEY,
+				secret: process.env.SECRET
 			},
-			withCredentials: true,
-			data: {
-				username: process.env.USERNAME,
-				password: process.env.PASSWORD,
-				remember: false,
-				grant_type: "password",
+			auth: {
+				tokenHost:`https://api.bloomberg.com`,
+				tokenPath: `/syndication/token`
 			}
-		})).data;
+		};
+		const oauth2 = require('simple-oauth2').create(credentials);
+		// Get the access token object.
+		const tokenConfig = {
+			username: process.env.USERNAME,
+			password: process.env.PASSWORD,
+		};
+		// Save the access token
+		try {
+			const result = await oauth2.clientCredentials.getToken(tokenConfig);
+			var accessToken = oauth2.accessToken.create(result);
+		} catch (error) {
+			console.log('Access Token Error', error.message);
+		}
+		
 	} catch(err) {
 		console.error(err);
 		process.exit(1);
@@ -47,7 +52,7 @@ axios.interceptors.request.use((request) => {
 	var storedArticles = storedArticleData.data;
 
 	// Set up Axios
-	axios.defaults.headers.common = {'Authorization': `Bearer ${token_result.access_token}`}
+	axios.defaults.headers.common = {'Authorization': `Bearer ${accessToken.token.access_token}`}
 	// Load the site
 	console.log("Loading Articles", process.env.URL);
 	try {
